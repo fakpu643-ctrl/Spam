@@ -1,0 +1,5 @@
+[2025-08-10T09:30:01.416Z] 🔁 Akun 1 mengirim pesan:
+✅ Berhasil kirim ke @lpm_seme_uke
+❌ Gagal kirim ke @lpmSemeUkeRpA: 403: CHAT_WRITE_FORBIDDEN (caused by messages.SendMessage)
+❌ Gagal kirim ke @lpm_seme_uke_rpx: 403: CHAT_WRITE_FORBIDDEN (caused by messages.SendMessage)
+
