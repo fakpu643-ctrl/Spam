@@ -20,8 +20,8 @@ const accounts = [
   },
   {
     name: "Akun 3",
-    apiId: 25922161, // Ganti dengan API ID akun 3
-    apiHash: "1ac23eeec768f729c4e8fe81c9a29d80", // Ganti dengan API Hash akun 3
+    apiId: 25922161,
+    apiHash: "1ac23eeec768f729c4e8fe81c9a29d80",
     session: new StringSession("..."), // ganti dengan session string akun 3
   },
 ];
@@ -94,23 +94,23 @@ async function sendMessageFromAccount(account) {
   }
 }
 
-// ---------- Penjadwalan Per Akun ----------
-// Akun 1: setiap 30 menit mulai dari menit ke-0 (10:00, 10:30, dst)
-schedule.scheduleJob("0 */30 * * * *", () => {
+// ---------- Penjadwalan Per Akun (Setiap 10 Menit, Bergiliran) ----------
+// Akun 1: menit 00 dan 30 setiap jam
+schedule.scheduleJob("0,30 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 1`);
   sendMessageFromAccount(accounts[0]);
 });
 
-// Akun 2: setiap 30 menit mulai dari menit ke-10 (10:10, 10:40, dst)
-schedule.scheduleJob("10 */30 * * * *", () => {
+// Akun 2: menit 10 dan 40 setiap jam
+schedule.scheduleJob("10,40 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 2`);
   sendMessageFromAccount(accounts[1]);
 });
 
-// Akun 3: setiap 30 menit mulai dari menit ke-20 (10:20, 10:50, dst)
-schedule.scheduleJob("20 */30 * * * *", () => {
+// Akun 3: menit 20 dan 50 setiap jam
+schedule.scheduleJob("20,50 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 3`);
   sendMessageFromAccount(accounts[2]);
 });
 
-console.log("Bot aktif. Menjadwalkan pengiriman setiap 10 menit bergantian antar akun...");
+console.log("Bot aktif ✅ Menjadwalkan pengiriman setiap 10 menit bergiliran antar akun...");
