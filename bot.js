@@ -4,24 +4,36 @@ const { StringSession } = require("telegram/sessions");
 const schedule = require("node-schedule");
 const axios = require("axios");
 
-// ---------- Konfigurasi ----------
+// ---------- Konfigurasi Akun Telegram ----------
 const accounts = [
   {
     name: "Akun 1",
     apiId: 29587265,
     apiHash: "4111592828f7580d6b87b6d7199e59f5",
-    session: new StringSession("1BQANOTEuMTA4LjU2LjIwMAG7UdUzqZdxwCBEaGATsUYgEDocABv3RWzTy45UX6QSJeNY1PKj+n7IZceMd1iWw1BRslAMgvdCALv3VLD2bO3Xmpe776H+cAk4FkKtTj3IdQ+oRjL8h2vZnuhqVfjzpMsWk1k6ArXE++3a2Mmm/d1YWGlAQtyFRhwwXstYuQgUFTsYgTk7FcvsNGh4wNpDzQDRMXk0yqRtJbu1OBamy3NxsqsnvIOrf1B1xTfUzAFN5/sJEcna+kyXEjFV0f5I2a6ZbRcQW4lZ4f1E36sooef9QSKVQEf2sdohyTXZ75v0Mi3Va6kGj12gveSyCLhIoH3NaQivuVnzQ37nEQhSDj1ujQ=="), // Sebaiknya simpan sesi di file terenkripsi
+    session: new StringSession("1BQANOTEuMTA4LjU2LjIwMAG7H2yJMgzEM1l3Rjv+QzptAwH9yEeJ+sFKOzzu+KgVw1idARcpheacm8MF33ZeRf3wunFUR9nJEU2NhOZlMWcCdCWXe2R7hrbXO1k6pYdyfFbHujin36LRl2pQljcb6sQsvQ2dzDdOtG71Ja5ubCZrxLv7ZxrJnTN65GH39x+5gyoRC3xCXBRCy42iOPYm5BbbjwgCJv3SEG4FQANx32iEkH0KEIXrn/R+sdvlITvmTLQ52EKOPq0sgiGqO8AnGltQvOQGPKh2kLbeEmINsFoSQI5PF+HvzxwKoyOH3X1bpJAXnY6nP/fNkIp3tXAIVMDraB7TdSgt7xVU6JzBTbxGig=="),
   },
   {
     name: "Akun 2",
     apiId: 22467930,
     apiHash: "aa8001b5a53dd34b332eacf1f5e82357",
-    session: new StringSession("1BQANOTEuMTA4LjU2LjIwMAG7Td931weO6yen1yr0KgjtCfJi/etRuGxPzdLWGu7GkgNRKkPAsyB91UF8n1EUuZyLYmrr1wAHxPJuAb7xFX0ypF/l1LIxvnMBWNU4wv3UK/FXUAfqksGen29SkSK4wX5vew0+nrc6b0/nwV4umolioEr80TPxRNKYyb9yam0D3eDg+9vFi6Vk43ctssDP6VDk0yjYffezcU8kcsqC5hFN0w3+hur1tlMWwItiFumhcY2svBxZljMSxSl8mMfoDD0PMqNvaWmislkJlE7R2lnafssz6Ulz9yi8oI3WG8lcd/RKT1S6GzjQFXoZ8soXxDMizwwJa66QnmJxiDZ5jmB4Fw=="),
+    session: new StringSession("1BQANOTEuMTA4LjU2LjIwMAG7lSSZZz4cbFV3XLV7wV8yEKyKjJt4tvuU5U19i9CFa20mvVgyof8MLRPw9XpF8s3hV9yZFdeYXAdVhZ5GO+YfgNfTWOUjOgeNix+G2UYQINISbEmlcNpb5oF57RX435Dru9Sw9Jte9UnB8rAa2fJ2lRTiYdMjTp/FrVs1/kKUK8PSnpfFVUr7FVYDJcwKnjsfYaCWuU7gTJetw51Tp90cJKb/Lbb56gmY3kzvajO5WcO8rnlYwQ1gnnMrlpiX0PZvXM/eF7v1oY86wmaJrSY+3x/rg9DBd9sdhSqSvidMVf6/kukHIapSa3o6/E7Koe0YJcMCFz9AfnrBwIU4JBt2Hg=="),
+  },
+  {
+    name: "Akun 3",
+    apiId: 25922161, // Ganti dengan API ID akun ke-3
+    apiHash: "1ac23eeec768f729c4e8fe81c9a29d80", // Ganti dengan API Hash akun ke-3
+    session: new StringSession("1BQANOTEuMTA4LjU2LjIwMAG7ULyAJj//0ZSGk9ZebXxBxUdELhf/Tjn/S4meLfu/DxRYkfbCfezCrJbvLnD94VGHLrUr9YkrHhfkglCMH9yH6h7X+Dc1bUouMPYUD7qZ8weLf6FwOK2waAd/T8iQNxbT/bFmAOvr8vtq6vNN3G49brW/UO+OsyCHgb5ZqyUZQbB3LmEW7wJ2TtlyZMmAdFdRXS2/UcKxht7ZEdgY21bB4DYX9GVVBb6j856jgCRPpknejF4aTwwr1I6gLVMZGPwDSCvrZt+RqDUq6lsQoHHrhWOaIYDwWxk44HTiyqYBaBXBajpXES3n8UI7/HgG1I6+H77j8anGnchaEi4Drmesyg=="),
   },
 ];
 
-const groupUsernames = ["@lpm_seme_uke", "@lpmSemeUkeRpA", "@lpm_seme_uke_rpx"];
+// ---------- Grup Tujuan ----------
+const groupUsernames = [
+  "@lpm_seme_uke",
+  "@lpmSemeUkeRpA",
+  "@lpm_seme_uke_rpx",
+];
 
+// ---------- Pesan Yang Akan Dikirim ----------
 const messageToSend = `
 ch b0k*p bxb https://t.me/+GDXb7qYaLytkNDA1
 
@@ -35,10 +47,11 @@ ch b0k*p bxb https://t.me/+GDXb7qYaLytkNDA1
 #seme #uke #area
 `.trim();
 
-const TELEGRAM_BOT_TOKEN = "8087072861:AAHuZA5fuXLhvPhGB945GWhbSkCzVxSZrEM"; // Ubah token
-const TELEGRAM_CHAT_ID = "6468926488"; // Ubah ID pribadi
+// ---------- Bot Log Telegram (Opsional) ----------
+const TELEGRAM_BOT_TOKEN = "8087072861:AAHuZA5fuXLhvPhGB945GWhbSkCzVxSZrEM"; // Token bot
+const TELEGRAM_CHAT_ID = "6468926488"; // ID chat untuk log
 
-// ---------- Fungsi Utility ----------
+// ---------- Fungsi Logging ----------
 function logToFile(message) {
   const logMsg = `[${new Date().toISOString()}] ${message}\n`;
   fs.appendFileSync("telegram_log.txt", logMsg);
@@ -57,6 +70,7 @@ async function sendLogToTelegram(message) {
   }
 }
 
+// ---------- Fungsi Utama untuk Kirim Pesan ----------
 async function sendMessageFromAccount(account) {
   const client = new TelegramClient(account.session, account.apiId, account.apiHash, {
     connectionRetries: 5,
@@ -98,7 +112,7 @@ async function sendMessageFromAccount(account) {
   }
 }
 
-// ---------- Penjadwalan ----------
+// ---------- Penjadwalan Setiap 10 Menit untuk Setiap Akun ----------
 let currentIndex = 0;
 
 schedule.scheduleJob("*/10 * * * *", async () => {
@@ -116,4 +130,4 @@ schedule.scheduleJob("*/10 * * * *", async () => {
   currentIndex = (currentIndex + 1) % accounts.length;
 });
 
-console.log("Bot aktif dan dijadwalkan setiap 10 menit...");
+console.log("✅ Bot aktif dan dijadwalkan setiap 10 menit per akun (rotasi 3 akun)...");
