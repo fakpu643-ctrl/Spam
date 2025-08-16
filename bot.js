@@ -1,3 +1,5 @@
+require("dotenv").config(); // Tambahkan ini paling atas
+
 const fs = require("fs");
 const { TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
@@ -10,21 +12,28 @@ const accounts = [
     name: "Akun 1",
     apiId: 29587265,
     apiHash: "4111592828f7580d6b87b6d7199e59f5",
-    session: new StringSession("..."), // ganti dengan session string akun 1
+    session: new StringSession(process.env.SESSION_1 || ""),
   },
   {
     name: "Akun 2",
     apiId: 22467930,
     apiHash: "aa8001b5a53dd34b332eacf1f5e82357",
-    session: new StringSession("..."), // ganti dengan session string akun 2
+    session: new StringSession(process.env.SESSION_2 || ""),
   },
   {
     name: "Akun 3",
     apiId: 25922161,
     apiHash: "1ac23eeec768f729c4e8fe81c9a29d80",
-    session: new StringSession("..."), // ganti dengan session string akun 3
+    session: new StringSession(process.env.SESSION_3 || ""),
   },
 ];
+
+// Validasi session agar tidak crash
+for (const account of accounts) {
+  if (!account.session || account.session.save() === "") {
+    throw new Error(`❌ Session string kosong atau tidak valid pada akun: ${account.name}`);
+  }
+}
 
 const groupUsernames = ["@lpm_seme_uke", "@lpmSemeUkeRpA", "@lpm_seme_uke_rpx"];
 
@@ -94,23 +103,20 @@ async function sendMessageFromAccount(account) {
   }
 }
 
-// ---------- Penjadwalan Per Akun (Setiap 10 Menit, Bergiliran) ----------
-// Akun 1: menit 00 dan 30 setiap jam
-schedule.scheduleJob("0,30 * * * *", () => {
+// ---------- Penjadwalan Per Akun ----------
+schedule.scheduleJob("0 */30 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 1`);
   sendMessageFromAccount(accounts[0]);
 });
 
-// Akun 2: menit 10 dan 40 setiap jam
-schedule.scheduleJob("10,40 * * * *", () => {
+schedule.scheduleJob("10 */30 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 2`);
   sendMessageFromAccount(accounts[1]);
 });
 
-// Akun 3: menit 20 dan 50 setiap jam
-schedule.scheduleJob("20,50 * * * *", () => {
+schedule.scheduleJob("20 */30 * * * *", () => {
   console.log(`[${new Date().toISOString()}] Menjalankan Akun 3`);
   sendMessageFromAccount(accounts[2]);
 });
 
-console.log("Bot aktif ✅ Menjadwalkan pengiriman setiap 10 menit bergiliran antar akun...");
+console.log("Bot aktif. Menjadwalkan pengiriman setiap 10 menit bergantian antar akun...");
